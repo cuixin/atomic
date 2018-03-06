@@ -71,10 +71,33 @@ func TestCompareAndSwapUint64(t *testing.T) {
 func TestGetAndSetBool(t *testing.T) {
 	var abool AtomicBoolean = 1
 	if !abool.Get() {
-		t.Fatal("AtomicBool TestGetAndSetBool_1")
+		t.Fatal("AtomicBool TestGetAndSetBool Get Fail")
 	}
-	abool.Set(false)
+	if !abool.Set(false) {
+		t.Fatal("AtomicBool TestGetAndSetBool Set false Fail")
+	}
 	if abool.Get() {
-		t.Fatal("AtomicBool TestGetAndSetBool")
+		t.Fatal("AtomicBool TestGetAndSetBool Get Fail")
+	}
+}
+
+func TestSwapBool(t *testing.T) {
+	var abool AtomicBoolean
+	if !abool.CompareAndSwap(false, true) {
+		t.Fatal("AtomicBool TestSwapBool Fail")
+	}
+}
+
+func TestSetBool(t *testing.T) {
+	var abool AtomicBoolean
+	if !abool.Set(true) {
+		t.Fatal("AtomicBool TestSetBool Fail")
+	}
+}
+
+func TestGetBool(t *testing.T) {
+	var abool AtomicBoolean
+	if abool.Get() {
+		t.Fatal("AtomicBool TestGetBool Fail")
 	}
 }

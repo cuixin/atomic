@@ -51,11 +51,11 @@ func (this *AtomicUint64) CompareAndSwap(old, newv uint64) bool {
 type AtomicBoolean int32
 
 func (this *AtomicBoolean) Set(val bool) bool {
-	var b int32 = 0
 	if val {
-		b = 1
+		return atomic.SwapInt32((*int32)(this), 1) == 0
+	} else {
+		return atomic.SwapInt32((*int32)(this), 0) == 1
 	}
-	return atomic.SwapInt32((*int32)(this), b) != 0
 }
 
 func (this *AtomicBoolean) Get() bool {
